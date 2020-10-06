@@ -6,12 +6,24 @@ import {IProduct} from "./IProduct";
 
 class ProductsStore{
 	private LOGIN_API_URL = "http://atelierturbosuflante.ro/api/login.php";
-	@observable public products: IProduct[];
+	private PRODUCTS_API_URL = "http://atelierturbosuflante.ro/api/products.php";
+	@observable public products: IProduct[] = [];
 	@observable public logedIn = observable.box(false);
 	@observable public user = observable.box('');
 	constructor() {
-		this.products = Object.values(productsJson) as IProduct[];
-		console.log("Products store created. Products: " + this.products.length);
+		// this.products = Object.values(productsJson) as IProduct[];
+		// console.log("Products store created. Products: " + this.products.length);
+		let requestOptions = {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({})
+		};
+		fetch(this.PRODUCTS_API_URL, requestOptions)
+		.then(response => response.json())
+		.then((data) => {
+			this.products = data;
+			console.log(data);
+		});
 	}
 
 	public getProductById(id: number): IProduct | undefined{
