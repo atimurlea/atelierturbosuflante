@@ -1,10 +1,9 @@
-import React from "react";
-import productsJson from "../resources/products.json";
+import React, {useContext} from "react";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {GridList, GridListTile, GridListTileBar, IconButton} from "@material-ui/core";
 import InfoIcon from "@material-ui/icons/Info";
 import { useHistory } from "react-router-dom";
-
+import ProductsStore from "../stores/products-store"
 const useStyles = makeStyles((theme: Theme) =>
 	                             createStyles({
 		                                          root: {
@@ -27,11 +26,11 @@ const useStyles = makeStyles((theme: Theme) =>
 function ProductListComponent(props: any) {
 	const history = useHistory()
 	const classes = useStyles();
-	const products = Object.values(productsJson);
+	const productsStore = useContext(ProductsStore);
 	return (
 		<div className={classes.root}>
 			<GridList cellHeight={180} className={classes.gridList}>
-				{products.map((tile) => (
+				{productsStore.products.map((tile) => (
 					<GridListTile key={tile.id} >
 						<img src={tile.image} alt={tile.name} />
 						<GridListTileBar
