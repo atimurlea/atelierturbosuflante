@@ -5,7 +5,7 @@ import * as _ from "lodash";
 import {IProduct} from "./IProduct";
 
 class ProductsStore{
-	private LOGIN_API_URL = "http://atelierturbosuflante.ro/php/api.php";
+	private LOGIN_API_URL = "http://atelierturbosuflante.ro/api/login.php";
 	@observable public products: IProduct[];
 	@observable public logedIn = observable.box(false);
 	@observable public user = observable.box('');
