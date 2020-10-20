@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function ProductListComponent(props: any) {
-	const history = useHistory()
+	const history = useHistory();
 	const classes = useStyles();
 	const productsStore = useContext(ProductsStore);
 	return (

@@ -5,8 +5,10 @@ import HomeComponent from "./components/HomeComponent";
 import ProductListComponent from "./components/ProductListComponent";
 import ProductDetailComponent from "./components/ProductDetailComponent";
 import ContactComponent from "./components/ContactComponent";
-import LoginComponent from "./components/LoginComponent";
+import LoginComponent from "./components/login/LoginComponent";
 import MenuComponent from "./components/MenuComponent";
+import EditProductComponent from "./components/EditProductComponent";
+import AddProductComponent from "./components/AddProductComponent";
 
 function App() {
   return (
@@ -32,6 +34,12 @@ function App() {
                 <Route path="/login">
                     <LoginComponent />
                 </Route>
+                  <Route path="/edit/:id">
+                      <EditProductComponent />
+                  </Route>
+                  <Route path="/add">
+                      <AddProductComponent />
+                  </Route>
             </Switch>
           </BrowserRouter>
       </div>

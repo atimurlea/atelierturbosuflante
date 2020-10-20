@@ -7,12 +7,19 @@ import {IProduct} from "./IProduct";
 class ProductsStore{
 	private LOGIN_API_URL = "http://atelierturbosuflante.ro/api/login.php";
 	private PRODUCTS_API_URL = "http://atelierturbosuflante.ro/api/products.php";
+	private ADD_API_URL = "http://atelierturbosuflante.ro/api/add.php";
+	private UPDATE_API_URL = "http://atelierturbosuflante.ro/api/update.php";
+	private DELETE_API_URL = "http://atelierturbosuflante.ro/api/delete.php";
 	@observable public products: IProduct[] = [];
 	@observable public logedIn = observable.box(false);
 	@observable public user = observable.box('');
 	constructor() {
 		// this.products = Object.values(productsJson) as IProduct[];
 		// console.log("Products store created. Products: " + this.products.length);
+		this.getProductsFromApi();
+	}
+
+	private getProductsFromApi():void{
 		let requestOptions = {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
@@ -50,6 +57,48 @@ class ProductsStore{
 			console.log(data);
 		});
 		return this.logedIn.get();
+	}
+
+	public delete(id: number) : void{
+		let requestOptions = {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ id: id})
+		};
+		fetch(this.DELETE_API_URL, requestOptions)
+		.then(response => response.json())
+		.then((data) => {
+			this.getProductsFromApi();
+			console.log("Products fetch after delete");
+		});
+	}
+
+	public add(name: string, category: string, image: string, price: string, descrition: string) : void{
+		let requestOptions = {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ name: name, category: category, image: image, price: price, descrition: descrition})
+		};
+		fetch(this.ADD_API_URL, requestOptions)
+		.then(response => response.json())
+		.then((data) => {
+			this.getProductsFromApi();
+			console.log("Products fetch after adding new product");
+		});
+	}
+
+	public update(id: string, name: string, category: string, image: string, price: string, descrition: string) : void{
+		let requestOptions = {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ id: id, name: name, category: category, image: image, price: price, descrition: descrition})
+		};
+		fetch(this.UPDATE_API_URL, requestOptions)
+		.then(response => response.json())
+		.then((data) => {
+			this.getProductsFromApi();
+			console.log("Products fetch after update");
+		});
 	}
 }
 

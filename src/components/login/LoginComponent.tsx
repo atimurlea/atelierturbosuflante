@@ -1,16 +1,34 @@
 import React, {FunctionComponent, useContext, useState} from "react";
-import {Button, TextField} from "@material-ui/core";
-import ProductsStore from "../stores/products-store"
+import {
+	Button,
+	TextField
+} from "@material-ui/core";
+import ProductsStore from "../../stores/products-store"
 import {observer} from "mobx-react";
+import ListTableComponent from "./ListTableComponent";
+import {useHistory} from "react-router-dom";
 
 export const LoginComponent: FunctionComponent = observer(() => {
 	const productsStore = useContext(ProductsStore);
+	const history = useHistory();
 	const [user, setUser] = useState("");
 	const [password, setPassword] = useState("");
 
+
 	if(productsStore.logedIn.get()) {
 		return <div>
-			Hello, {productsStore.user.get()}!
+			<div>
+				Hello, {productsStore.user.get()}!
+			</div>
+			<div>
+				<Button variant="contained" color="primary" onClick={() => {
+					history.push('/add');
+				}
+				}>
+					Add
+				</Button>
+			</div>
+			<ListTableComponent></ListTableComponent>
 		</div>;
 	} else {
 		return <div>
@@ -24,7 +42,6 @@ export const LoginComponent: FunctionComponent = observer(() => {
 				onChange={evt => setPassword(evt.target.value)}
 			/>
 			<Button variant="contained" color="primary" onClick={()=>{
-				console.log("click pe log");
 				productsStore.login(user, password);
 			}
 			}>
