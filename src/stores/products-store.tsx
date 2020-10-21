@@ -33,11 +33,11 @@ class ProductsStore{
 		});
 	}
 
-	public getProductById(id: number): IProduct | undefined{
+	public getProductById(id: number): IProduct{
 		let prod = _.find(this.products, (p: IProduct)=>{
 			return p.id == id;
 		});
-		return prod;
+		return prod!;
 	}
 
 	@action
@@ -73,11 +73,11 @@ class ProductsStore{
 		});
 	}
 
-	public add(name: string, category: string, image: string, price: string, descrition: string) : void{
+	public add(name: string, category: string, image: string, price: string, description: string) : void{
 		let requestOptions = {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ name: name, category: category, image: image, price: price, descrition: descrition})
+			body: JSON.stringify({ name : name, category : category, image : image, price : price, description : description})
 		};
 		fetch(this.ADD_API_URL, requestOptions)
 		.then(response => response.json())
@@ -87,11 +87,11 @@ class ProductsStore{
 		});
 	}
 
-	public update(id: string, name: string, category: string, image: string, price: string, descrition: string) : void{
+	public update(id: string, name: string, category: string, image: string, price: string, description: string) : void{
 		let requestOptions = {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ id: id, name: name, category: category, image: image, price: price, descrition: descrition})
+			body: JSON.stringify({ id: id, name: name, category: category, image: image, price: price, description: description})
 		};
 		fetch(this.UPDATE_API_URL, requestOptions)
 		.then(response => response.json())

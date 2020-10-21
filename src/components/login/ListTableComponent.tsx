@@ -22,6 +22,7 @@ function ListTableComponent() {
 						<TableCell align="right">Name</TableCell>
 						<TableCell align="right">Category</TableCell>
 						<TableCell align="right">Price</TableCell>
+						<TableCell align="right">Description</TableCell>
 						<TableCell align="right">Action</TableCell>
 					</TableRow>
 				</TableHead>
@@ -34,6 +35,7 @@ function ListTableComponent() {
 							<TableCell align="right">{row.name}</TableCell>
 							<TableCell align="right">{row.category}</TableCell>
 							<TableCell align="right">{row.price}</TableCell>
+							<TableCell align="right">{row.description}</TableCell>
 							<TableCell align="right">
 								<ActionButtonsComponent id={row.id}></ActionButtonsComponent>
 							</TableCell>
