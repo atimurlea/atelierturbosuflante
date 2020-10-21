@@ -1,33 +1,36 @@
 import React, {useContext} from "react";
 import {useParams} from "react-router-dom";
 import ProductsStore from "../stores/products-store"
-import {TextField} from "@material-ui/core";
+import {List, ListItem, ListItemText} from "@material-ui/core";
 
 function ProductDetailComponent(props: any) {
 	const productsStore = useContext(ProductsStore);
 	let { id } = useParams();
 
 	function DescriptionComponent() {
+		let product = productsStore.getProductById(id);
 		return (
 			<div>
-				<div>
-					<TextField disabled id="standard-disabled" label={productsStore.getProductById(id)?.id}/>
-				</div>
-				<div>
-					<TextField disabled id="standard-disabled" label={productsStore.getProductById(id)?.name}/>
-				</div>
-				<div>
-					<TextField disabled id="sstandard-disabled" label={productsStore.getProductById(id)?.category}/>
-				</div>
-				<div>
-					<TextField disabled id="standard-disabled" label={productsStore.getProductById(id)?.image}/>
-				</div>
-				<div>
-					<TextField disabled id="standard-disabled" label={productsStore.getProductById(id)?.price}/>
-				</div>
-				<div>
-					<TextField disabled id="standard-disabled" label={productsStore.getProductById(id)?.description}/>
-				</div>
+				<List component="nav" aria-label="test">
+					<ListItem button>
+						<ListItemText primary={product?.id} />
+					</ListItem>
+					<ListItem button>
+						<ListItemText primary={product?.name} />
+					</ListItem>
+					<ListItem button>
+						<ListItemText primary={product?.category} />
+					</ListItem>
+					<ListItem button>
+						<ListItemText primary={product?.image} />
+					</ListItem>
+					<ListItem button>
+						<ListItemText primary={product?.price} />
+					</ListItem>
+					<ListItem button>
+						<ListItemText primary={product?.description} />
+					</ListItem>
+				</List>
 			</div>
 		);
 	}
