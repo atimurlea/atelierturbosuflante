@@ -1,5 +1,4 @@
 import {action, observable} from "mobx";
-import productsJson from "../resources/products.json";
 import {createContext} from "react";
 import * as _ from "lodash";
 import {IProduct} from "./IProduct";
@@ -10,16 +9,16 @@ class ProductsStore{
 	private ADD_API_URL = "http://atelierturbosuflante.ro/api/add.php";
 	private UPDATE_API_URL = "http://atelierturbosuflante.ro/api/update.php";
 	private DELETE_API_URL = "http://atelierturbosuflante.ro/api/delete.php";
-	@observable public products: IProduct[] = [];
+	@observable public products = observable.array<IProduct>([]);
 	@observable public logedIn = observable.box(false);
 	@observable public user = observable.box('');
+
 	constructor() {
-		// this.products = Object.values(productsJson) as IProduct[];
-		// console.log("Products store created. Products: " + this.products.length);
 		this.getProductsFromApi();
 	}
 
-	private getProductsFromApi():void{
+	@action
+	 private getProductsFromApi():void{
 		let requestOptions = {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
@@ -28,8 +27,7 @@ class ProductsStore{
 		fetch(this.PRODUCTS_API_URL, requestOptions)
 		.then(response => response.json())
 		.then((data) => {
-			this.products = data;
-			console.log(data);
+			this.products.replace(data);
 		});
 	}
 
@@ -54,7 +52,6 @@ class ProductsStore{
 			if(this.logedIn.get()){
 				this.user.set(data[0].user);
 			}
-			console.log(data);
 		});
 		return this.logedIn.get();
 	}
@@ -69,7 +66,6 @@ class ProductsStore{
 		.then(response => response.json())
 		.then((data) => {
 			this.getProductsFromApi();
-			console.log("Products fetch after delete");
 		});
 	}
 
@@ -83,7 +79,6 @@ class ProductsStore{
 		.then(response => response.json())
 		.then((data) => {
 			this.getProductsFromApi();
-			console.log("Products fetch after adding new product");
 		});
 	}
 
@@ -97,7 +92,6 @@ class ProductsStore{
 		.then(response => response.json())
 		.then((data) => {
 			this.getProductsFromApi();
-			console.log("Products fetch after update");
 		});
 	}
 }

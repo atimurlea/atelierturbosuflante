@@ -3,6 +3,7 @@ import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow}
 import {makeStyles} from "@material-ui/core/styles";
 import ProductsStore from "../../stores/products-store";
 import ActionButtonsComponent from "./ActionButtonsComponent";
+import {observer} from "mobx-react";
 
 function ListTableComponent() {
 	const useStyles = makeStyles({
@@ -27,7 +28,7 @@ function ListTableComponent() {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{productsStore.products.map((row) => (
+					{productsStore.products.slice().map((row) => (
 						<TableRow key={row.id}>
 							<TableCell component="th" scope="row">
 								{row.id}
@@ -47,4 +48,4 @@ function ListTableComponent() {
 	);
 }
 
-export default ListTableComponent;
+export default observer(ListTableComponent);
